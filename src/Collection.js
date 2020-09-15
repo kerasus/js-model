@@ -1,6 +1,4 @@
-import storeData from "../store/index";
-
-import CRUD from '../util/CRUD'
+import CRUD from './CRUD'
 
 class Collection {
 
@@ -10,7 +8,8 @@ class Collection {
         this.loading = false;
         this.url_key = null;
         this.setUrlKey();
-        this.actionUrl = storeData.getters.url_crud_collection(storeData.state)(this);
+        // this.actionUrl = storeData.getters.url_crud_collection(storeData.state)(this);
+        // this.baseRoute = '';
 
         if(typeof data !== 'undefined' && data !== null && typeof data.list !== 'undefined' && data.list !== null) {
             data = data.list;
@@ -62,9 +61,10 @@ class Collection {
 
     fetch(data, url) {
         if (typeof url === 'undefined') {
-            url = this.actionUrl;
+            // url = this.actionUrl;
+            url = this.baseRoute;
         }
-        return this.crud.read(url, data);
+        return this.crud.fetch(url, data);
     }
 
     remove(itemId) {

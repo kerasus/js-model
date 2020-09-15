@@ -1,19 +1,20 @@
-import Vue from 'vue'
-import Vuex from "vuex"
 import axios from 'axios'
-import VueAxios from 'vue-axios'
-
-Vue.use(Vuex);
-Vue.use(VueAxios, axios);
 
 class CRUD {
 
-    constructor() {
-        this.headers = {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': window.Laravel.csrfToken,
-            // 'Content-Type': 'multipart/form-data'
-        };
+    constructor(headers) {
+        this.setHeaders(headers);
+    }
+
+    setHeaders(headers) {
+        if (typeof headers === 'undefined') {
+            headers = {};
+        }
+        // {
+        //     'Accept': 'application/json',
+        //     // 'Content-Type': 'multipart/form-data'
+        // }
+        this.headers = headers;
     }
 
     create(url, data) {
@@ -22,7 +23,7 @@ class CRUD {
         })
     }
 
-    read(url, data) {
+    fetch(url, data) {
         return axios.get(url, {
             headers: this.headers,
             params: data

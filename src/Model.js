@@ -1,8 +1,6 @@
-import storeData from "../store/index";
 import moment from 'moment';
-
 import * as PersianDate from "persian-date";
-import CRUD from '../util/CRUD'
+import CRUD from './CRUD'
 
 class Model {
 
@@ -18,7 +16,8 @@ class Model {
         this.loading = false;
         this.props = props;
         this.initProps();
-        this.actionUrl = storeData.getters.url_crud_model(storeData.state)(this);
+        // this.actionUrl = storeData.getters.url_crud_model(storeData.state)(this);
+        // this.baseRoute = '';
     }
 
     initProps() {
@@ -160,18 +159,22 @@ class Model {
 
     list(data, url) {
         if (typeof url === 'undefined') {
-            url = this.actionUrl;
-            if (this.actionUrl === null) {
-                console.error('url_key is null.');
+            // url = this.actionUrl;
+            url = this.baseRoute;
+            // if (this.actionUrl === null) {
+            if (this.baseRoute === null) {
+                console.error('baseRoute is null.');
             }
         }
-        return this.crud.read(url, data);
+        return this.crud.fetch(url, data);
     }
 
     create(data, url) {
         if (typeof url === 'undefined') {
-            url = this.actionUrl;
-            if (this.actionUrl === null) {
+            // url = this.actionUrl;
+            url = this.baseRoute;
+            // if (this.actionUrl === null) {
+            if (this.baseRoute === null) {
                 console.error('url_key is null.');
             }
         }
@@ -180,18 +183,22 @@ class Model {
 
     show(id, url) {
         if (typeof url === 'undefined') {
-            url = this.actionUrl + '/' + id;
-            if (this.actionUrl === null) {
+            // url = this.actionUrl + '/' + id;
+            url = this.baseRoute + '/' + id;
+            // if (this.actionUrl === null) {
+            if (this.baseRoute === null) {
                 console.error('url_key is null.');
             }
         }
-        return this.crud.read(url);
+        return this.crud.fetch(url);
     }
 
     update(url) {
         if (typeof url === 'undefined') {
-            url = this.actionUrl + '/' + this.id;
-            if (this.actionUrl === null) {
+            // url = this.actionUrl + '/' + this.id;
+            url = this.baseRoute + '/' + this.id;
+            // if (this.actionUrl === null) {
+            if (this.baseRoute === null) {
                 console.error('url_key is null.');
             }
         }
@@ -205,7 +212,9 @@ class Model {
     delete(url) {
         if (typeof url === 'undefined') {
             url = this.actionUrl + '/' + this.id;
-            if (this.actionUrl === null) {
+            url = this.baseRoute + '/' + this.id;
+            // if (this.actionUrl === null) {
+            if (this.baseRoute === null) {
                 console.error('url_key is null.');
             }
         }
@@ -249,14 +258,5 @@ class Model {
             humanize: duration.humanize(true)
         };
     }
-
-    // moment.locale('fa');
-    //moment.duration(1, "minutes").humanize();
-
-    // var x = new moment()
-    // var y = new moment()
-    // var duration = moment.duration(x.diff(y))
-
-    //moment.duration(x.diff(y)).humanize();
 }
 export default Model;
