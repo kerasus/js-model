@@ -59,7 +59,6 @@ class Collection {
     fetch(data, url) {
         if (typeof url === 'undefined') {
             // url = this.actionUrl;
-            console.log('this.baseRoute', this)
             url = this.baseRoute;
         }
         return this.crud.fetch(url, data);
