@@ -6,10 +6,7 @@ class Collection {
         this.list = [];
         this.crud = new CRUD();
         this.loading = false;
-        this.url_key = null;
-        this.setUrlKey();
-        // this.actionUrl = storeData.getters.url_crud_collection(storeData.state)(this);
-        // this.baseRoute = '';
+        this.baseRoute();
 
         if(typeof data !== 'undefined' && data !== null && typeof data.list !== 'undefined' && data.list !== null) {
             data = data.list;
@@ -27,11 +24,11 @@ class Collection {
         }
     }
 
-    setUrlKey() {
+    baseRoute() {
         let model = this.model(),
             object = new model();
-        if (typeof object.url_key !== 'undefined') {
-            this.url_key = object.url_key;
+        if (typeof object.baseRoute !== 'undefined') {
+            this.baseRoute = object.baseRoute;
         }
     }
 
@@ -62,6 +59,7 @@ class Collection {
     fetch(data, url) {
         if (typeof url === 'undefined') {
             // url = this.actionUrl;
+            console.log('this.baseRoute', this)
             url = this.baseRoute;
         }
         return this.crud.fetch(url, data);
