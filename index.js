@@ -1,8 +1,6 @@
-import Model from "./src/Model";
-import Collection from "./src/Collection";
+'use strict';
 
-export
-{
-    Model,
-    Collection
-}
+import Model from "./src/Model"
+import Collection from "./src/Collection"
+
+export { Model, Collection }
