@@ -50,15 +50,6 @@ class Collection {
         this.list.push(object);
     }
 
-    removeItems (...index) {
-        let that = this
-        this.removeItem(...index.map(t => that.removeItem(t)))
-    }
-
-    removeItem (index) {
-        this.list.splice(index, 1)
-    }
-
     getItem(key, val) {
         return this.list.find(function (item) {
             return (item[key] === val)
@@ -74,10 +65,9 @@ class Collection {
     }
 
     remove(itemId) {
-        for (let i = 0; typeof this.list[i] !== 'undefined'; i++) {
-            if (this.list[i].id === itemId) {
-                this.list.splice(i, 1);
-            }
+        const itemIndex = this.list.findIndex(i => (i.id === itemId))
+        if (itemIndex) {
+            this.list.splice(itemIndex, 1);
         }
     }
 
