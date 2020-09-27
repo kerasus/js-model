@@ -27,7 +27,7 @@ class Collection {
     baseRoute() {
         let model = this.model(),
             object = new model();
-        if (typeof object.baseRoute !== 'undefined') {
+        if (typeof object !== 'undefined' && typeof object.baseRoute !== 'undefined') {
             this.baseRoute = object.baseRoute;
         }
     }
