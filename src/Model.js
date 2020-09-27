@@ -134,10 +134,14 @@ class Model {
     apply() {
         for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
             this[this.props[i].key + '_old'] = this[this.props[i].key];
-            this[this.props[i].key] = this[this.props[i].key + '_buffer'];
+            if (typeof this[this.props[i].key + '_buffer'] !== 'undefined') {
+                this[this.props[i].key] = this[this.props[i].key + '_buffer'];
+            }
             if (this[this.props[i].key + '_id']) {
                 this[this.props[i].key + '_id_old'] = this[this.props[i].key + '_id'];
-                this[this.props[i].key + '_id'] = this[this.props[i].key + '_id' + '_buffer'];
+                if (typeof this[this.props[i].key + '_id' + '_buffer'] !== 'undefined') {
+                    this[this.props[i].key + '_id'] = this[this.props[i].key + '_id' + '_buffer'];
+                }
             }
             this.bufferNewData({
                 key: this.props[i].key,
