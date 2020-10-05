@@ -182,6 +182,9 @@ class Model {
                 console.error('url_key is null.');
             }
         }
+        if (!data) {
+            data = this.loadApiResource();
+        }
         return this.crud.create(url, data);
     }
 
