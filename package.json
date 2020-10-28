@@ -1,6 +1,6 @@
 {
   "name": "js-abstract-model",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "create a model and collection of objects",
   "main": "index.js",
   "scripts": {

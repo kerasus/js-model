@@ -56,6 +56,12 @@ class Collection {
         })
     }
 
+    getIndex(key, val) {
+        return this.list.findIndex(function (item) {
+            return (item[key] === val)
+        })
+    }
+
     fetch(data, url) {
         if (typeof url === 'undefined') {
             // url = this.actionUrl;
