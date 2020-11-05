@@ -162,69 +162,90 @@ class Model {
     }
 
     list(data, url) {
-        if (typeof url === 'undefined') {
-            // url = this.actionUrl;
-            url = this.baseRoute;
-            // if (this.actionUrl === null) {
-            if (this.baseRoute === null) {
-                console.error('baseRoute is null.');
-            }
+        if (!this.baseRoute) {
+            return new Promise(() => {
+                throw new Error('baseRoute is not set');
+            })
         }
+
+        if (!url) {
+            url = this.baseRoute;
+        }
+
+
         return this.crud.fetch(url, data);
     }
 
     create(data, url) {
-        if (typeof url === 'undefined') {
-            // url = this.actionUrl;
-            url = this.baseRoute;
-            // if (this.actionUrl === null) {
-            if (this.baseRoute === null) {
-                console.error('url_key is null.');
-            }
+        if (!this.baseRoute) {
+            return new Promise(() => {
+                throw new Error('baseRoute is not set');
+            })
         }
+
+        if (!url) {
+            url = this.baseRoute;
+        }
+
         if (!data) {
             data = this.loadApiResource();
         }
+
+
         return this.crud.create(url, data);
     }
 
     show(id, url) {
-        if (typeof url === 'undefined') {
-            // url = this.actionUrl + '/' + id;
-            url = this.baseRoute + '/' + id;
-            // if (this.actionUrl === null) {
-            if (this.baseRoute === null) {
-                console.error('url_key is null.');
-            }
+        if (!this.baseRoute) {
+            return new Promise(() => {
+                throw new Error('baseRoute is not set');
+            })
         }
+
+        if (!id) {
+            id = this.id;
+        }
+
+        if (!url) {
+            url = this.baseRoute + '/' + id;
+        }
+
+
         return this.crud.fetch(url);
     }
 
     update(url) {
-        if (typeof url === 'undefined') {
-            // url = this.actionUrl + '/' + this.id;
-            url = this.baseRoute + '/' + this.id;
-            // if (this.actionUrl === null) {
-            if (this.baseRoute === null) {
-                console.error('url_key is null.');
-            }
+        if (!this.baseRoute) {
+            return new Promise(() => {
+                throw new Error('baseRoute is not set');
+            })
         }
+
+        if (!url) {
+            url = this.baseRoute + '/' + this.id;
+        }
+
         let data = this;
         if (this.apiResource) {
             data = this.loadApiResource();
         }
+
+
         return this.crud.update(url, data);
     }
 
     delete(url) {
-        if (typeof url === 'undefined') {
-            url = this.actionUrl + '/' + this.id;
-            url = this.baseRoute + '/' + this.id;
-            // if (this.actionUrl === null) {
-            if (this.baseRoute === null) {
-                console.error('url_key is null.');
-            }
+        if (!this.baseRoute) {
+            return new Promise(() => {
+                throw new Error('baseRoute is not set');
+            })
         }
+
+        if (!url) {
+            url = this.baseRoute + '/' + this.id;
+        }
+
+
         return this.crud.delete(url);
     }
 
@@ -233,8 +254,18 @@ class Model {
             let formData = new FormData();
             for (let i = 0; typeof this.apiResource.fields[i] !== 'undefined'; i++) {
                 let field = this.apiResource.fields[i];
-                formData.append(field.key, this[field.key]);
+                if (field.value) {
+                    if (typeof field.value === 'function') {
+                        let fieldValue = field.value();
+                        formData.append(field.key, fieldValue);
+                    } else {
+                        formData.append(field.key, field.value);
+                    }
+                } else {
+                    formData.append(field.key, this[field.key]);
+                }
             }
+
 
             return formData;
         } else {
@@ -251,6 +282,8 @@ class Model {
                     data[field.key] = this[field.key];
                 }
             }
+
+
             return data;
         }
     }
