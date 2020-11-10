@@ -2,10 +2,11 @@ import CRUD from './CRUD'
 
 class Collection {
 
-    constructor(data) {
+    constructor(data, paginateData) {
         this.list = [];
         this.crud = new CRUD();
         this.loading = false;
+        this.paginate = paginateData;
         this.baseRoute();
 
         if(typeof data !== 'undefined' && data !== null && typeof data.list !== 'undefined' && data.list !== null) {
