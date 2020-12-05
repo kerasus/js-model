@@ -26,9 +26,8 @@ class Model {
                 key = prop.key;
             if (prop.init) {
                 this[key] = prop.init(this.inputData);
-            } else if (prop.relatedModel && this.inputData[key]) {
+            } else if (prop.relatedModel) {
                 this[key] = new prop.relatedModel(this.inputData[key]);
-                this.relatedModelId(key);
             } else if (prop.value) {
                 if (typeof prop.value === 'function') {
                     this[key] = prop.value(this.inputData[key], this.inputData);
