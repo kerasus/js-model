@@ -249,21 +249,31 @@ class Model {
         return this.crud.delete(url);
     }
 
+    loadApiResource_item (field, loadItem) {
+        if (field.value) {
+            if (typeof field.value === 'function') {
+                let fieldValue = field.value();
+                loadItem(field.key, fieldValue);
+            } else {
+                loadItem(field.key, field.value);
+            }
+        } else {
+            loadItem(field.key, this[field.key]);
+        }
+    }
+
     loadApiResource() {
+        if (!this.apiResource) {
+            return this;
+        }
+
         if (this.apiResource.sendType === 'form-data') {
             let formData = new FormData();
             for (let i = 0; typeof this.apiResource.fields[i] !== 'undefined'; i++) {
                 let field = this.apiResource.fields[i];
-                if (field.value) {
-                    if (typeof field.value === 'function') {
-                        let fieldValue = field.value();
-                        formData.append(field.key, fieldValue);
-                    } else {
-                        formData.append(field.key, field.value);
-                    }
-                } else {
-                    formData.append(field.key, this[field.key]);
-                }
+                this.loadApiResource_item(field, function (key, value) {
+                    formData.append(key, value);
+                })
             }
 
 
@@ -272,15 +282,9 @@ class Model {
             let data = {};
             for (let i = 0; typeof this.apiResource.fields[i] !== 'undefined'; i++) {
                 let field = this.apiResource.fields[i];
-                if (field.value) {
-                    if (typeof field.value === 'function') {
-                        data[field.key] = field.value();
-                    } else {
-                        data[field.key] = field.value;
-                    }
-                } else {
-                    data[field.key] = this[field.key];
-                }
+                this.loadApiResource_item(field, function (key, value) {
+                    data[key] = value;
+                })
             }
 
 
