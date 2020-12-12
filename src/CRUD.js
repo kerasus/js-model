@@ -47,13 +47,16 @@ class CRUD {
     }
 
     update(url, data) {
-
-        if (!this.checkUrl(url)) {
-            return new Promise();
+        if (data instanceof FormData) {
+            data.append('_method', 'put')
+            return axios.post(url, data, {
+                headers: this.headers
+            })
+        } else {
+            return axios.put(url, data, {
+                headers: this.headers
+            })
         }
-        return axios.put(url, data, {
-            headers: this.headers
-        })
     }
 
     delete(url) {
