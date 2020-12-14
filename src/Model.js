@@ -7,6 +7,7 @@ class Model {
     constructor(data, props) {
         this.crud = new CRUD();
         this.apiResource = null;
+        this.relatedModelSuffix = '_model';
         this.inputData = this.optional(data, {});
         this.warn = {
             mode: false,
