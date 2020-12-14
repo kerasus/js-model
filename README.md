@@ -12,7 +12,23 @@ Data model for javascript
 
 something like this:
 
-models/user.js
+models/Gender.js
+    
+    class Gender extends Model {
+        constructor(data) {
+            super(data, [
+                {key: 'id'},
+                {key: 'name'}
+            ]);
+        }
+        
+        isMale () {
+            return this.name === 'male'
+        }
+    }
+    export default Gender;
+    
+models/User.js
 
     import Gender from './Gender';
     
@@ -22,7 +38,7 @@ models/user.js
                 {key: 'baseRoute'}, // base Api address for CURD
                 {key: 'id'},
                 {key: 'first_name',
-                    value: function (itemVal, inputData) {
+                    default: function (itemVal, inputData) {
                         if (typeof inputData.first_name !== 'undefined' && inputData.first_name !== null) {
                             return inputData.first_name;
                         } else if (typeof inputData.firstName !== 'undefined' && inputData.firstName !== null) {
@@ -31,7 +47,7 @@ models/user.js
                     }
                 },
                 {key: 'last_name',
-                    value: function (itemVal, inputData) {
+                    default: function (itemVal, inputData) {
                         if (typeof inputData.last_name !== 'undefined' && inputData.last_name !== null) {
                             return inputData.last_name;
                         } else if (typeof inputData.lastName !== 'undefined' && inputData.lastName !== null) {
@@ -46,7 +62,6 @@ models/user.js
                 {key: 'role'},
                 {key: 'created_at'},
                 {key: 'updated_at'},
-    
                 {
                     key: 'photo',
                     default: 'default_photo_address_for_null_value'
@@ -57,7 +72,8 @@ models/user.js
                 }
             ]);
     
-            // with set apiResource, customise send data
+            // (optional)
+            // you can customise sent data with set apiResource
             let that = this;
             this.apiResource = {
                 fields: [
@@ -95,18 +111,6 @@ models/user.js
     }
     
     export {User, UserList};
-    
-models/Gender.js
-    
-    class Gender extends Model {
-        constructor(data) {
-            super(data, [
-                {key: 'id'},
-                {key: 'name'}
-            ]);
-        }
-    }
-    export default Gender;
 
 in component: 
 
@@ -120,7 +124,6 @@ in component:
             name: 'male'
         }
     });
-    
     user.create()
     .then(function(responce){
         // do something with responce
@@ -128,6 +131,9 @@ in component:
     .catch(function(error){
         // error ...
     })
+   
+    // use nested models
+    user.gender_model().isMale() // true
     
     // send user data to server to update user data
     var user = new User({
@@ -139,7 +145,6 @@ in component:
             name: 'male'
         }
     });
-    
     user.update() // return promise
 
 
