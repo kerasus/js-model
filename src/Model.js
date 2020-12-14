@@ -16,31 +16,33 @@ class Model {
         this.loading = false;
         this.props = props;
         this.initProps();
-        // this.actionUrl = storeData.getters.url_crud_model(storeData.state)(this);
-        // this.baseRoute = '';
     }
 
     initProps() {
         for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
-            let prop = this.props[i],
-                key = prop.key;
-            if (typeof prop.relatedModel !== 'undefined') {
-                this[key] = new prop.relatedModel(this.inputData[key]);
-                this.relatedModelId(key);
-            } else if (typeof prop.value !== 'undefined') {
-                if (typeof prop.value === 'function') {
-                    this[key] = prop.value(this.inputData[key], this.inputData);
-                } else {
-                    this[key] = prop.value;
-                }
-            } else {
-                let defaultVal = null;
-                if (typeof prop.default !== 'undefined') {
-                    defaultVal = prop.default;
-                }
-                this[key] = this.optional(this.inputData[key], defaultVal);
-            }
+            this.setPropKey(this.props[i])
+            this.setPropKeyModel(this.props[i])
         }
+    }
+
+    setPropKey (prop) {
+        let key = prop.key;
+        let defaultVal = null;
+        if (typeof prop.default === 'function') {
+            this[key] = prop.default(this.inputData[key], this.inputData);
+        } else if (typeof prop.default !== 'undefined') {
+            defaultVal = prop.default;
+        }
+        this[key] = this.optional(this.inputData[key], defaultVal);
+    }
+
+    setPropKeyModel (prop) {
+        let key = prop.key;
+        if (typeof prop.relatedModel === 'undefined') {
+            return
+        }
+        this[key+this.relatedModelSuffix] = ()=> new prop.relatedModel(this.inputData[key])
+        this.relatedModelId(key);
     }
 
     isValidData(data) {
@@ -71,8 +73,11 @@ class Model {
         }
     }
 
-    relatedModelId(relatedModelName) {
-        this[relatedModelName+'_id'] = this[relatedModelName].id;
+    relatedModelId (relatedModelName) {
+        if (!this[relatedModelName] || !this[relatedModelName].id) {
+            return
+        }
+        this[relatedModelName+'_id'] = this[relatedModelName].id
     }
 
     findProp(key) {
@@ -262,7 +267,12 @@ class Model {
 
     loadApiResource() {
         if (!this.apiResource) {
-            return this;
+            let data = {};
+            for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
+                let key = this.props[i].key;
+                data[key] = this[key]
+            }
+            return data;
         }
 
         if (this.apiResource.sendType === 'form-data') {
