@@ -24,12 +24,10 @@ class Model {
         for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
             let prop = this.props[i],
                 key = prop.key;
-            if (prop.init) {
-                this[key] = prop.init(this.inputData);
-            } else if (prop.relatedModel) {
+            if (typeof prop.relatedModel !== 'undefined') {
                 this[key] = new prop.relatedModel(this.inputData[key]);
                 this.relatedModelId(key);
-            } else if (prop.value) {
+            } else if (typeof prop.value !== 'undefined') {
                 if (typeof prop.value === 'function') {
                     this[key] = prop.value(this.inputData[key], this.inputData);
                 } else {
@@ -37,7 +35,7 @@ class Model {
                 }
             } else {
                 let defaultVal = null;
-                if (prop.default) {
+                if (typeof prop.default !== 'undefined') {
                     defaultVal = prop.default;
                 }
                 this[key] = this.optional(this.inputData[key], defaultVal);
