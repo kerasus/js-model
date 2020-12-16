@@ -133,7 +133,7 @@ in component:
     })
    
     // use nested models
-    user.gender_model().isMale() // true
+    user.gender.isMale() // true
     
     // send user data to server to update user data
     var user = new User({

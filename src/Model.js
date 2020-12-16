@@ -7,7 +7,6 @@ class Model {
     constructor(data, props) {
         this.crud = new CRUD();
         this.apiResource = null;
-        this.relatedModelSuffix = '_model';
         this.inputData = this.optional(data, {});
         this.warn = {
             mode: false,
@@ -42,7 +41,7 @@ class Model {
         if (typeof prop.relatedModel === 'undefined') {
             return
         }
-        this[key+this.relatedModelSuffix] = ()=> new prop.relatedModel(this.inputData[key])
+        this[key] = new prop.relatedModel(this.inputData[key])
         this.relatedModelId(key);
     }
 
