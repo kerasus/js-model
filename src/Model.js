@@ -78,6 +78,8 @@ class Model {
             return
         }
         this[relatedModelName+'_id'] = this[relatedModelName].id
+
+        return this[relatedModelName+'_id']
     }
 
     findProp(key) {
