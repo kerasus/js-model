@@ -230,7 +230,7 @@ class Model {
             url = this.baseRoute + '/' + this.id;
         }
 
-        data = this.loadApiResource();
+        let data = this.loadApiResource();
 
         return this.crud.update(url, data);
     }
