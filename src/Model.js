@@ -78,6 +78,8 @@ class Model {
             return
         }
         this[relatedModelName+'_id'] = this[relatedModelName].id
+
+        return this[relatedModelName+'_id']
     }
 
     findProp(key) {
@@ -228,11 +230,7 @@ class Model {
             url = this.baseRoute + '/' + this.id;
         }
 
-        let data = this;
-        if (this.apiResource) {
-            data = this.loadApiResource();
-        }
-
+        let data = this.loadApiResource();
 
         return this.crud.update(url, data);
     }
@@ -269,7 +267,13 @@ class Model {
         if (!this.apiResource) {
             let data = {};
             for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
-                let key = this.props[i].key;
+                let key = this.props[i].key
+                if (typeof this.props[i] !== 'undefined') {
+                    let relatedModelId = this.relatedModelId(key)
+                    if (relatedModelId) {
+                        data[key+'_id'] = relatedModelId
+                    }
+                }
                 data[key] = this[key]
             }
             return data;
