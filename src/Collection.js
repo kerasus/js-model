@@ -53,7 +53,7 @@ class Collection {
 
     getItem(key, val) {
         return this.list.find(function (item) {
-            return (item[key] === val)
+            return (item[key].toString() === val.toString())
         })
     }
 
