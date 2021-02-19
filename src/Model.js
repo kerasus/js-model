@@ -32,8 +32,9 @@ class Model {
             this[key] = prop.default(this.inputData[key], this.inputData);
         } else if (typeof prop.default !== 'undefined') {
             defaultVal = prop.default;
+        } else {
+            this[key] = this.optional(this.inputData[key], defaultVal);
         }
-        this[key] = this.optional(this.inputData[key], defaultVal);
     }
 
     setPropKeyModel (prop) {
