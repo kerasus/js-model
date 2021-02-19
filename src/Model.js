@@ -29,12 +29,11 @@ class Model {
         let key = prop.key;
         let defaultVal = null;
         if (typeof prop.default === 'function') {
-            this[key] = prop.default(this.inputData[key], this.inputData);
+            defaultVal = prop.default(this.inputData[key], this.inputData);
         } else if (typeof prop.default !== 'undefined') {
             defaultVal = prop.default;
-        } else {
-            this[key] = this.optional(this.inputData[key], defaultVal);
         }
+        this[key] = this.optional(this.inputData[key], defaultVal);
     }
 
     setPropKeyModel (prop) {
