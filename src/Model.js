@@ -27,13 +27,35 @@ class Model {
 
     setPropKey (prop) {
         let key = prop.key;
-        let defaultVal = null;
-        if (typeof prop.default === 'function') {
-            defaultVal = prop.default(this.inputData[key], this.inputData);
-        } else if (typeof prop.default !== 'undefined') {
-            defaultVal = prop.default;
+        let defaultVal = this.getDefaultVal(prop, key);
+        let value = this.getVal(prop, key);
+        this[key] = this.optional(value, defaultVal);
+    }
+
+    getVal (prop, key) {
+        let val = null,
+            value = prop.value;
+        if (typeof value === 'function') {
+            val = value(this.inputData[key], this.inputData);
+        } else if (typeof value !== 'undefined') {
+            val = value;
+        } else {
+            val = this.inputData[key];
         }
-        this[key] = this.optional(this.inputData[key], defaultVal);
+
+        return val;
+    }
+
+    getDefaultVal (prop, key) {
+        let defaultVal = null,
+            defaultProp = prop.default;
+        if (typeof defaultProp === 'function') {
+            defaultVal = defaultProp(this.inputData[key], this.inputData);
+        } else if (typeof defaultProp !== 'undefined') {
+            defaultVal = defaultProp;
+        }
+
+        return defaultVal;
     }
 
     setPropKeyModel (prop) {
