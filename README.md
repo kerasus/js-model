@@ -4,7 +4,7 @@ Data model for javascript
 
 ## Install
 
-    npm install --save js-abstract-model
+    npm install js-abstract-model --save
 
 ## Usage
 
