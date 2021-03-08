@@ -14,6 +14,7 @@ something like this:
 
 models/Gender.js
     
+    import { Model } from 'js-abstract-model'
     class Gender extends Model {
         constructor(data) {
             super(data, [
@@ -30,6 +31,7 @@ models/Gender.js
     
 models/User.js
 
+    import { Model, Collection } from 'js-abstract-model'
     import Gender from './Gender';
     
     class User extends Model {
