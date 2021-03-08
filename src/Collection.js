@@ -7,7 +7,7 @@ class Collection {
         this.crud = new CRUD();
         this.loading = false;
         this.paginate = paginateData;
-        this.baseRoute();
+        this.loadBaseRoute();
 
         if(typeof data !== 'undefined' && data !== null && typeof data.list !== 'undefined' && data.list !== null) {
             data = data.list;
@@ -25,11 +25,13 @@ class Collection {
         }
     }
 
-    baseRoute() {
+    loadBaseRoute() {
         let model = this.model(),
             object = new model();
         if (typeof object !== 'undefined' && typeof object.baseRoute !== 'undefined') {
             this.baseRoute = object.baseRoute;
+        } else {
+            this.baseRoute = null;
         }
     }
 
@@ -67,6 +69,10 @@ class Collection {
         if (typeof url === 'undefined') {
             // url = this.actionUrl;
             url = this.baseRoute;
+        }
+
+        if (!url) {
+            return new Promise();
         }
         return this.crud.fetch(url, data);
     }
