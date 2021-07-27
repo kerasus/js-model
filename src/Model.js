@@ -7,7 +7,7 @@ class Model {
     constructor(data, props) {
         this.crud = new CRUD();
         this.apiResource = null;
-        this.inputData = this.optional(data, {});
+        this.loadInputData(data)
         this.warn = {
             mode: false,
             keys: []
@@ -18,7 +18,15 @@ class Model {
         this.initProps();
     }
 
-    initProps() {
+    loadInputData (data) {
+        if (data.inputData) {
+            this.inputData = data.inputData
+        } else {
+            this.inputData = this.optional(data, {})
+        }
+    }
+
+    initProps () {
         for (let i = 0; typeof this.props[i] !== 'undefined'; i++) {
             this.setPropKey(this.props[i])
             this.setPropKeyModel(this.props[i])
