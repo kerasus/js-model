@@ -19,10 +19,9 @@ class Model {
     }
 
     loadInputData (data) {
+        this.inputData = this.optional(data, {})
         if (data && data.inputData) {
-            this.inputData = data.inputData
-        } else {
-            this.inputData = this.optional(data, {})
+            delete data.inputData
         }
     }
 
