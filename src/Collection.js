@@ -79,7 +79,7 @@ class Collection {
 
     remove(itemId) {
         const itemIndex = this.list.findIndex(i => (i.id === itemId))
-        if (itemIndex) {
+        if (itemIndex !== -1) {
             this.list.splice(itemIndex, 1);
         }
     }
