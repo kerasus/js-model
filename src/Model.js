@@ -1,5 +1,5 @@
-import moment from 'moment';
-import * as PersianDate from "persian-date";
+import moment from 'moment'
+import * as PersianDate from 'persian-date'
 import CRUD from './CRUD'
 
 class Model {

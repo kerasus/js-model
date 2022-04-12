@@ -1,6 +1,6 @@
 {
   "name": "js-abstract-model",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "description": "create a model and collection of objects",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,8 @@
   "license": "MIT",
   "homepage": "https://github.com/kerasus/js-model",
   "dependencies": {
-    "axios": "^0.21.1",
-    "moment": "^2.29.1",
+    "axios": "^0.26.1",
+    "moment": "^2.29.2",
     "persian-date": "^1.1.0"
   }
 }
