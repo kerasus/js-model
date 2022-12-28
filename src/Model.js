@@ -1,6 +1,7 @@
-import moment from 'moment'
-import * as PersianDate from 'persian-date'
-import CRUD from './CRUD'
+const moment = require('moment')
+const PersianDate = require('persian-date')
+const CRUD = require('./CRUD')
+// import * as PersianDate from 'persian-date'
 
 class Model {
 
@@ -344,4 +345,6 @@ class Model {
         };
     }
 }
-export default Model;
+
+module.exports = Model;
+module.exports.default = Model;

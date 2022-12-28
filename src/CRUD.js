@@ -1,4 +1,4 @@
-import axios from 'axios'
+const axios = require('axios')
 
 class CRUD {
 
@@ -69,4 +69,6 @@ class CRUD {
         });
     }
 }
-export default CRUD;
+
+module.exports = CRUD;
+module.exports.default = CRUD;

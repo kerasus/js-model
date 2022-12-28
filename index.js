@@ -1,6 +1,8 @@
 'use strict';
 
-import Model from "./src/Model"
-import Collection from "./src/Collection"
+const Model = require('./src/Model')
+const Collection = require('./src/Collection')
+const AbstractModel = { Model, Collection }
 
-export { Model, Collection }
+module.exports = AbstractModel;
+module.exports.default = AbstractModel;

@@ -1,4 +1,4 @@
-import CRUD from './CRUD'
+const CRUD = require('./CRUD')
 
 class Collection {
 
@@ -115,4 +115,6 @@ class Collection {
         this.list.forEach(element => element.editMode = mode);
     }
 }
-export default Collection;
+
+module.exports = Collection;
+module.exports.default = Collection;

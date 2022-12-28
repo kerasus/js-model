@@ -17,8 +17,8 @@
   "license": "MIT",
   "homepage": "https://github.com/kerasus/js-model",
   "dependencies": {
-    "axios": "^0.26.1",
-    "moment": "^2.29.2",
+    "axios": "^1.2.1",
+    "moment": "^2.29.4",
     "persian-date": "^1.1.0"
   }
 }
