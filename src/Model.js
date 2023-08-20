@@ -16,6 +16,8 @@ class Model {
         this.loading = false;
         this.props = props;
         this.initProps();
+
+        this.loadEnums()
     }
 
     loadInputData (data) {
@@ -343,6 +345,24 @@ class Model {
             diff: duration,
             humanize: duration.humanize(true)
         };
+    }
+
+    loadEnums () {
+        Object.keys(this.enumKeysForLoad).forEach(enumKey => {
+            this.loadEnum(enumKey, this.enumKeysForLoad[enumKey])
+        })
+    }
+
+    loadEnum (enumKey, enumItem) {
+        const target = enumItem.enums.find(type => type.value === this[enumKey])
+        if (!target) {
+            this[enumItem.infoKey] = {
+                label: null,
+                value: null
+            }
+        } else {
+            this[enumItem.infoKey] = target
+        }
     }
 }
 export default Model;
