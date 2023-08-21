@@ -5,7 +5,7 @@ const CRUD = require('./CRUD')
 
 class Model {
 
-    constructor(data, props) {
+    constructor(data, props, enumKeysForLoad) {
         this.crud = new CRUD();
         this.apiResource = null;
         this.loadInputData(data)
@@ -17,6 +17,8 @@ class Model {
         this.loading = false;
         this.props = props;
         this.initProps();
+
+        this.loadEnums(enumKeysForLoad)
     }
 
     loadInputData (data) {
@@ -343,6 +345,25 @@ class Model {
             diff: duration,
             humanize: duration.humanize(true)
         };
+    }
+
+
+    loadEnums (enumKeysForLoad) {
+        Object.keys(enumKeysForLoad).forEach(enumKey => {
+            this.loadEnum(enumKey, enumKeysForLoad[enumKey])
+        })
+    }
+
+    loadEnum (enumKey, enumItem) {
+        const target = enumItem.enums.find(type => type.value === this[enumKey])
+        if (!target) {
+            this[enumItem.infoKey] = {
+                label: null,
+                value: null
+            }
+        } else {
+            this[enumItem.infoKey] = target
+        }
     }
 }
 
