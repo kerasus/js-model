@@ -1,4 +1,4 @@
-const CRUD = require('./CRUD')
+const CRUD = require('./CRUD.js')
 
 class Collection {
   constructor(data, paginateData) {

@@ -1,6 +1,6 @@
 const moment = require('moment')
 const PersianDate = require('persian-date')
-const CRUD = require('./CRUD')
+const CRUD = require('./CRUD.js')
 // import * as PersianDate from 'persian-date'
 
 class Model {
@@ -42,7 +42,7 @@ class Model {
   }
 
   getVal (prop, key) {
-    let val = null
+    let val
     const value = prop.value
     if (typeof value === 'function') {
       val = value(this.inputData[key], this.inputData)
@@ -341,6 +341,9 @@ class Model {
   }
 
   loadEnums (enumKeysForLoad) {
+    if (!enumKeysForLoad) {
+      return
+    }
     Object.keys(enumKeysForLoad).forEach(enumKey => {
       this.loadEnum(enumKey, enumKeysForLoad[enumKey])
     })
