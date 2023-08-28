@@ -356,6 +356,9 @@ class Model {
         label: null,
         value: null
       }
+      if (enumItem.enumListKey) {
+        this[enumItem.enumListKey] = enumItem.enums
+      }
     } else {
       this[enumItem.infoKey] = target
     }
